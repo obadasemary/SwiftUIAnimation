@@ -12,6 +12,7 @@ struct ContentView: View {
     
     @State private var progress: CGFloat = 0.0
     
+    @State private var isDotIndicatorLoading = false
     @State private var isRoundedRectanglesLoading = false
     
     @State private var isOverlayLoading = false
@@ -33,7 +34,7 @@ struct ContentView: View {
         
         VStack(spacing: 50) {
             
-            HStack {
+            Group {
                 
                 ZStack {
                     
@@ -62,7 +63,42 @@ struct ContentView: View {
                 }
             }
             
-            HStack {
+            VStack(spacing: 50) {
+                
+                HStack(spacing: 50) {
+                    
+                    HStack {
+                            
+                        ForEach(0...4, id: \.self) { index in
+                            
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(.pink)
+                                .scaleEffect(self.isDotIndicatorLoading ? 1 : 0)
+                                .animation(Animation.linear(duration: 1.0).repeatForever())
+                        }
+                    }
+                    .onAppear() {
+                        
+                        self.isDotIndicatorLoading = true
+                    }
+                    
+                    HStack {
+                            
+                        ForEach(0...4, id: \.self) { index in
+                            
+                            Circle()
+                                .frame(width: 10, height: 10)
+                                .foregroundColor(.green)
+                                .scaleEffect(self.isDotIndicatorLoading ? 1 : 0)
+                                .animation(Animation.linear(duration: 0.6).repeatForever().delay(0.2 * Double(index)))
+                        }
+                    }
+                    .onAppear() {
+                        
+                        self.isDotIndicatorLoading = true
+                    }
+                }
                 
                 ZStack {
                     
