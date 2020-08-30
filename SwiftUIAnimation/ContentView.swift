@@ -57,7 +57,8 @@ struct ContentView: View {
                         self.progress += 0.01
                         print(self.progress)
                         if self.progress >= 1.0 {
-                            timer.invalidate()
+//                            timer.invalidate()
+                            self.progress = 0
                         }
                     }
                 }
