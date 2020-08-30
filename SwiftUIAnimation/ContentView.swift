@@ -10,6 +10,8 @@ import SwiftUI
 
 struct ContentView: View {
     
+    @State private var progress: CGFloat = 0.0
+    
     @State private var isRoundedRectanglesLoading = false
     
     @State private var isOverlayLoading = false
@@ -29,7 +31,36 @@ struct ContentView: View {
     
     var body: some View {
         
-        VStack(spacing: 20) {
+        VStack(spacing: 50) {
+            
+            HStack {
+                
+                ZStack {
+                    
+                    Text("\(Int(progress * 100))%")
+                        .font(.system(Font.TextStyle.title, design: Font.Design.rounded))
+                        .bold()
+                    
+                    Circle()
+                        .stroke(Color(.systemGray5), lineWidth: 10)
+                        .frame(width: 200, height: 200)
+                    
+                    Circle()
+                        .trim(from: 0, to: progress)
+                        .stroke(Color.green, lineWidth: 10)
+                        .frame(width: 200, height: 200)
+                        .rotationEffect(Angle(degrees: -90))
+                }
+                .onAppear() {
+                    Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { timer in
+                        self.progress += 0.01
+                        print(self.progress)
+                        if self.progress >= 1.0 {
+                            timer.invalidate()
+                        }
+                    }
+                }
+            }
             
             HStack {
                 
