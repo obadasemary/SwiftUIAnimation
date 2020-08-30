@@ -9,8 +9,33 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @State private var circleColorChanged = false
+    @State private var heartColorChanged = false
+    @State private var heartSizeChanged = false
+    
     var body: some View {
-        Text("Hello, World!")
+        
+        ZStack {
+            
+            Circle()
+                .frame(width: 100, height: 100)
+                .foregroundColor(circleColorChanged ? Color(.systemGray5) : .red)
+//                .animation(.default)
+            
+            Image(systemName: "heart.fill")
+                .foregroundColor(heartColorChanged ? .red : .white)
+                .font(.system(size: 50))
+                .scaleEffect(heartSizeChanged ? 1.0 : 0.5)
+//                .animation(.default)
+        }
+//        .animation(.default)\
+            .animation(.spring(response: 0.3, dampingFraction: 0.3, blendDuration: 0.3))
+        .onTapGesture {
+            self.circleColorChanged.toggle()
+            self.heartColorChanged.toggle()
+            self.heartSizeChanged.toggle()
+        }
     }
 }
 
